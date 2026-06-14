@@ -84,6 +84,12 @@ try:
             person_id INTEGER NOT NULL REFERENCES people(id) ON DELETE CASCADE,
             ingredient_id BIGINT NOT NULL REFERENCES ingredients(id) ON DELETE RESTRICT
         );
+        
+        CREATE TABLE IF NOT EXISTS peoples_disliked_categories (
+            id SERIAL PRIMARY KEY,
+            person_id INTEGER NOT NULL REFERENCES people(id) ON DELETE CASCADE,
+            category VARCHAR NOT NULL
+        );
     """)
 
     print("Database schema created successfully.")
