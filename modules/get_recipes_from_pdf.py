@@ -45,10 +45,8 @@ class GetRecipesFromPDF:
         for i in range(0, len(text_lines)-2):
             if is_an_ingredient[i] and not is_an_ingredient[i+1] and is_an_ingredient[i+2]:
                 text_lines[i] = text_lines[i].strip()+" "+text_lines[i+1].strip()
-        recipe_text_lines = [line.strip().replace("•	 ", "• ").replace("•	", "• ")
-                             for line in text_lines if "•" in line]
-        recipe = ("\n").join(recipe_text_lines).strip()
-        return recipe
+        recipe_text_lines = [line.replace("•", "").strip() for line in text_lines if "•" in line]
+        return recipe_text_lines
 
     @staticmethod
     def get_recipe_title(text):
@@ -75,12 +73,13 @@ class GetRecipesFromPDF:
 
 if __name__ == "__main__":
     recipe_pdf = GetRecipesFromPDF("../test/2000-kcal-DIY-WYSOKOBIALKOWY.pdf",
-                                   [75, 95, 102, 111, 118, 136, 138, 140])
+                                   [75])#, 95, 102, 111, 118, 136, 138, 140])
     recipe_pdf.correct_titles_user_input()
 
     # test
     print(recipe_pdf.title_list)
-    # print(recipe_pdf.ingredients_list)
+    # TODO: divide ingredient into <ingredient name>, <amount description>, <amount grams>
+    print(recipe_pdf.ingredients_list)
     print(recipe_pdf.servings_list)
     print(recipe_pdf.description_list)
     print(recipe_pdf.time_list)
